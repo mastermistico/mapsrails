@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FredypruebaMAPS</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANlu4ESIoWS_bN_e3RpQkgR2BSEC1WxHg&callback=initMap"
+                                       async defer></script>

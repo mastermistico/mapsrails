@@ -1,0 +1,14 @@
+<header><h1 class="display-4">Lugares</h1></header>
+
+<%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=4.6696324,-74.1222875&markers=4.6696324,-74.1222875&zoom=7&size=640x400&key=AIzaSyANlu4ESIoWS_bN_e3RpQkgR2BSEC1WxHg",
+              class: 'img-fluid img-rounded', alt: "hire on the map"%>
+
+<!--%= link_to 'Add place', new_place_path, class: 'btn btn-primary btn-lg' %-->
+
+<div class="card">
+  <div class="card-block">
+    <ul>
+      <%= render @places %>
+    </ul>
+  </div>
+</div>
