@@ -1,3 +1,12 @@
 <header><h1 class="display-4">Poner Lugares</h1></header>
 
 <%= render 'form' %>
+<%= render 'map' %>
+<h2>LUGARES REGITRADOS</h2>
+<div class="card">
+  <div class="card-block">
+    <ul>
+      <%= render @places %>
+    </ul>
+  </div>
+</div>

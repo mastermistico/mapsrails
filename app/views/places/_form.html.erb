@@ -1,18 +1,70 @@
 <%= form_for @place do |f| %>
   <fieldset class="form-group">
-    <%= f.label :title %>
+    <%= f.label :id %>
     <%= f.text_field :title, class: "form-control" %>
   </fieldset>
 
-  <fieldset class="form-group">
-    <%= f.label :visited_by %>
-    <%= f.text_field :visited_by, class: "form-control" %>
-  </fieldset>
 
   <fieldset class="form-group">
-    <%= f.label :address, 'Address' %>
-    <%= f.text_field :address, class: "form-control" %>
-  </fieldset>
+    <%= f.label :latitude, 'lat' %>
+    <%= f.text_field :latitude, class: "form-control" %>
+  </fieldset>  
 
+  <fieldset class="form-group">
+    <%= f.label :longitude, 'lng' %>
+    <%= f.text_field :longitude, class: "form-control" %>
+  </fieldset>  
   <%= f.submit 'Add!', class: 'btn btn-primary' %>
 <% end %>
+
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {  Zoom: 14 }, internal: {id: 'map'}}, function(){
+    var mark = <%=raw @hash.to_json %>
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(displayOnMap);
+        markers= handler.addMarkers(<%=raw @hash.to_json %>)
+        
+      } else {
+         mark.push(           {
+                "lat": 4.6720154,
+                "lng": -74.115682,
+                //"picture": {
+                //  "url": "http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png",
+                //  "width":  32,
+                //  "height": 32
+                //},
+                "infowindow": "Usted esta aca!"
+            })
+         markers = handler.addMarkers(mark);
+          handler.bounds.extendWith(markers);
+          handler.fitMapToBounds();
+        }
+  });
+
+
+function displayOnMap(position){
+  console.log(position)
+  var marker = handler.addMarker({
+    lat: position.coords.latitude,
+    lng: position.coords.longitude
+  });
+  handler.map.centerOn(marker);
+};
+
+  google.maps.event.addListener(handler.getMap(),'click', function(event){
+
+  //console.log(handler.getMap().getBounds().getNorthEast().toString())
+  console.log(event.latLng.lat(),event.latLng.lng())
+  var marker = handler.addMarker({
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng()
+    });
+    document.getElementById("place_latitude").value = event.latLng.lat()
+    document.getElementById("place_longitude").value = event.latLng.lng()
+    document.getElementById("place_title").value = event.latLng.lat().toString().slice(4,10)
+    handler.map.centerOn(marker);
+
+})
+
+</script>
